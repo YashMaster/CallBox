@@ -17,6 +17,16 @@ exports.handler = function(context, event, callback) {
               digits: '999w999'
           });
           twiml.play({}, 'https://raw.githubusercontent.com/YashMaster/CallBox/master/assets/dtmf-9.mp3')
+          
+          //Now send a text to notify me that I let someone in... This doesn't work though...
+            context.getTwilioClient().messages.create({
+                to: mobileNumber,
+                from: event.from,
+                body: 'Someone entered!'
+            }).then(msg => {
+                callback(null, msg.sid);
+            });
+            
           break
       default:
           twiml.gather({
